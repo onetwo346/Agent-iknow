@@ -525,12 +525,29 @@
 
         // Page Navigation
         function switchPage(from, to) {
+            if (!from || !to) {
+                console.error('Invalid page transition attempted:', from, to);
+                return;
+            }
             from.classList.remove('active');
             to.classList.add('active');
-            if (to === pages.chatbot) elements.chatInput.focus();
+            if (to === pages.options) {
+                setTimeout(() => elements.basicMode.focus(), 500); // Focus on first option after transition
+            } else if (to === pages.chatbot) {
+                setTimeout(() => elements.chatInput.focus(), 500); // Focus on chat input after transition
+            }
         }
 
-        elements.tapToBegin.addEventListener('click', () => switchPage(pages.intro, pages.options));
+        // Ensure intro page transition works perfectly
+        elements.tapToBegin.addEventListener('click', () => {
+            if (pages.intro.classList.contains('active')) {
+                switchPage(pages.intro, pages.options);
+                console.log('Transitioned from Intro to Options page successfully.');
+            } else {
+                console.warn('Intro page not active; transition aborted.');
+            }
+        });
+
         elements.basicMode.addEventListener('click', () => startChat('basic'));
         elements.godMode.addEventListener('click', () => startChat('god'));
         elements.closeChat.addEventListener('click', () => {
