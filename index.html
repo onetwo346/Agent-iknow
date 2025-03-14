@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agent-IKnow: Cosmic Oracle</title>
+    <title>Agent-IKnow</title>
     <style>
         * {
             box-sizing: border-box;
@@ -12,31 +12,13 @@
         }
 
         body {
-            font-family: 'Orbitron', 'Arial', sans-serif;
-            background: radial-gradient(circle at 50% 50%, #0a0a23, #000 70%);
+            font-family: Arial, sans-serif;
+            background: #0a0a23;
             color: #fff;
             height: 100vh;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            position: relative;
-        }
-
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('https://www.transparenttextures.com/patterns/stardust.png'), radial-gradient(circle at 20% 20%, rgba(0, 255, 204, 0.1), transparent 50%);
-            animation: galaxyTwirl 15s infinite linear;
-            z-index: -1;
-        }
-
-        @keyframes galaxyTwirl {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
         }
 
         .page {
@@ -44,7 +26,7 @@
             height: 100%;
             flex-direction: column;
             opacity: 0;
-            transition: opacity 0.5s ease-in-out;
+            transition: opacity 0.5s ease;
         }
 
         .page.active {
@@ -56,172 +38,137 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            background: transparent;
-            position: relative;
-            overflow: hidden;
         }
 
         .intro-content h1 {
-            font-size: 3.5em;
+            font-size: 3em;
             color: #00ffcc;
-            text-shadow: 0 0 20px #00ffcc, 0 0 40px #00ccaa;
+            text-shadow: 0 0 10px #00ffcc;
             margin-bottom: 20px;
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes glow {
-            from { text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ccaa; }
-            to { text-shadow: 0 0 20px #00ffcc, 0 0 40px #00ccaa; }
         }
 
         .intro-content p {
-            font-size: 1.3em;
-            max-width: 700px;
-            line-height: 1.6;
-            color: #ddd;
-            text-shadow: 0 0 5px #000;
+            font-size: 1.2em;
+            max-width: 600px;
+            line-height: 1.5;
         }
 
         .pulse {
-            padding: 15px 35px;
-            font-size: 1.6em;
-            background: linear-gradient(45deg, #00ffcc, #00ccaa);
+            padding: 15px 30px;
+            font-size: 1.5em;
+            background: #00ffcc;
             border: none;
             border-radius: 25px;
             color: #0a0a23;
             cursor: pointer;
-            animation: pulse 1.5s infinite, hoverLift 0.3s ease-out;
-            transition: transform 0.2s, box-shadow 0.3s;
-            box-shadow: 0 5px 15px rgba(0, 255, 204, 0.3);
+            animation: pulse 1.5s infinite;
+            transition: transform 0.2s;
         }
 
         .pulse:hover {
-            transform: scale(1.1) translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 255, 204, 0.5);
+            transform: scale(1.05);
         }
 
         @keyframes pulse {
             0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            50% { transform: scale(1.1); }
             100% { transform: scale(1); }
-        }
-
-        @keyframes hoverLift {
-            from { transform: translateY(0); }
-            to { transform: translateY(-5px); }
         }
 
         footer {
             position: fixed;
-            bottom: 15px;
-            font-size: 0.95em;
-            color: #bbb;
+            bottom: 10px;
+            font-size: 0.9em;
+            color: #ccc;
             width: 100%;
             text-align: center;
-            text-shadow: 0 0 3px #000;
         }
 
         footer a {
             color: #00ffcc;
             text-decoration: none;
-            transition: color 0.3s, text-shadow 0.3s;
+            transition: color 0.3s;
         }
 
         footer a:hover {
             color: #fff;
-            text-shadow: 0 0 10px #00ffcc;
         }
 
         #options-page {
             justify-content: center;
             align-items: center;
             text-align: center;
-            background: transparent;
         }
 
         #options-page h2 {
-            font-size: 2.8em;
-            margin-bottom: 50px;
-            color: #00ffcc;
-            text-shadow: 0 0 15px #00ccaa;
+            font-size: 2.5em;
+            margin-bottom: 40px;
         }
 
         .mode-btn {
-            padding: 20px 45px;
-            font-size: 1.3em;
-            margin: 15px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 3px solid #00ffcc;
+            padding: 20px 40px;
+            font-size: 1.2em;
+            margin: 10px;
+            background: #333;
+            border: 2px solid #00ffcc;
             color: #fff;
-            border-radius: 15px;
+            border-radius: 10px;
             cursor: pointer;
-            transition: all 0.4s ease;
-            backdrop-filter: blur(5px);
+            transition: all 0.3s;
         }
 
         .mode-btn:hover {
-            background: linear-gradient(45deg, #00ffcc, #00ccaa);
+            background: #00ffcc;
             color: #0a0a23;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 255, 204, 0.4);
         }
 
         #chatbot-page {
             flex: 1;
             position: relative;
             overflow: hidden;
-            background: rgba(10, 10, 35, 0.9);
-            border-radius: 15px;
-            box-shadow: 0 0 30px rgba(0, 255, 204, 0.2);
         }
 
         .sidebar {
             position: absolute;
             top: 0;
-            left: -300px;
-            width: 300px;
+            left: -250px;
+            width: 250px;
             height: 100%;
-            background: linear-gradient(135deg, #1a1a3d, #0a0a23);
-            padding: 25px;
+            background: #1a1a3d;
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            transition: transform 0.4s ease-in-out;
+            gap: 15px;
+            transition: transform 0.3s ease;
             z-index: 10;
-            border-right: 2px solid #00ffcc;
         }
 
         .sidebar.open {
-            transform: translateX(300px);
+            transform: translateX(250px);
         }
 
         .sidebar button {
-            padding: 12px;
-            background: linear-gradient(45deg, #00ffcc, #00ccaa);
+            padding: 10px;
+            background: #00ffcc;
             border: none;
             color: #0a0a23;
             cursor: pointer;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            font-weight: bold;
-            text-shadow: 0 0 5px #fff;
+            border-radius: 5px;
+            transition: background 0.3s;
         }
 
         .sidebar button:hover {
-            background: linear-gradient(45deg, #00ccaa, #009977);
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(0, 255, 204, 0.3);
+            background: #00ccaa;
         }
 
         .settings-menu {
             display: none;
             flex-direction: column;
-            gap: 15px;
-            margin-top: 25px;
-            background: rgba(26, 26, 61, 0.9);
-            padding: 15px;
-            border-radius: 10px;
-            border: 1px solid #00ffcc;
+            gap: 10px;
+            margin-top: 20px;
+            background: #1a1a3d;
+            padding: 10px;
+            border-radius: 5px;
         }
 
         .settings-menu.active {
@@ -229,155 +176,113 @@
         }
 
         .settings-menu label {
-            font-size: 1em;
-            color: #ddd;
-            text-shadow: 0 0 3px #000;
+            font-size: 0.9em;
+            margin: 5px 0;
         }
 
         .settings-menu input, .settings-menu select {
             width: 100%;
-            padding: 8px;
+            padding: 5px;
             border-radius: 5px;
-            border: 1px solid #00ffcc;
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-            transition: all 0.3s;
-        }
-
-        .settings-menu input:focus, .settings-menu select:focus {
-            outline: none;
-            border-color: #00ccaa;
-            box-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+            border: none;
         }
 
         .chat-container {
             flex: 1;
-            padding: 15px;
+            padding: 10px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 10px;
             height: 100%;
             margin-left: 0;
-            transition: margin-left 0.4s ease, transform 0.4s ease;
-            background: rgba(10, 10, 35, 0.7);
-            border-radius: 10px;
+            transition: margin-left 0.3s ease;
         }
 
         .chat-container.with-sidebar {
-            margin-left: 300px;
+            margin-left: 250px;
         }
 
         #close-chat {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 5px;
+            right: 5px;
             background: #ff5555;
             border: none;
             color: #fff;
-            padding: 8px 15px;
+            padding: 5px 10px;
             cursor: pointer;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            text-shadow: 0 0 5px #ff0000;
-            box-shadow: 0 5px 10px rgba(255, 85, 85, 0.3);
+            border-radius: 5px;
+            transition: background 0.3s;
+            z-index: 20;
         }
 
         #close-chat:hover {
             background: #cc4444;
-            transform: scale(1.1);
-            box-shadow: 0 10px 20px rgba(255, 85, 85, 0.5);
         }
 
         #menu-toggle {
             position: absolute;
-            top: 15px;
-            left: 15px;
-            background: linear-gradient(45deg, #00ffcc, #00ccaa);
+            top: 10px;
+            left: 10px;
+            background: #00ffcc;
             border: none;
             color: #0a0a23;
-            padding: 10px 18px;
+            padding: 8px 15px;
             cursor: pointer;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            font-size: 1.2em;
-            box-shadow: 0 5px 15px rgba(0, 255, 204, 0.3);
+            border-radius: 5px;
+            transition: background 0.3s;
+            z-index: 20;
             display: none;
         }
 
         #menu-toggle:hover {
-            background: linear-gradient(45deg, #00ccaa, #009977);
-            transform: scale(1.1);
-            box-shadow: 0 10px 20px rgba(0, 255, 204, 0.5);
+            background: #00ccaa;
         }
 
         #chat-output {
             flex-grow: 1;
             max-height: 65vh;
             overflow-y: auto;
-            padding: 15px;
-            background: rgba(26, 26, 61, 0.9);
+            padding: 10px;
+            background: #1a1a3d;
             border-radius: 10px;
-            font-size: 1.1em;
-            line-height: 1.5;
+            font-size: 1em;
+            line-height: 1.4;
             word-wrap: break-word;
-            border: 1px solid #00ffcc;
-            animation: fadeIn 0.5s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         #chat-output p {
-            margin: 10px 0;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 5px;
-            border-left: 4px solid #00ffcc;
+            margin: 8px 0;
         }
 
         .input-container {
             display: flex;
             flex-direction: row;
-            gap: 10px;
+            gap: 5px;
             width: 100%;
             align-items: center;
         }
 
         #chat-input {
             flex-grow: 1;
-            padding: 10px;
-            border: 1px solid #00ffcc;
-            border-radius: 10px;
-            font-size: 1.1em;
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-            transition: all 0.3s;
-        }
-
-        #chat-input:focus {
-            outline: none;
-            border-color: #00ccaa;
-            box-shadow: 0 0 15px rgba(0, 255, 204, 0.5);
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
         }
 
         #send-msg {
-            padding: 10px 20px;
-            background: linear-gradient(45deg, #00ffcc, #00ccaa);
+            padding: 8px 15px;
+            background: #00ffcc;
             border: none;
             color: #0a0a23;
             cursor: pointer;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            font-weight: bold;
-            box-shadow: 0 5px 15px rgba(0, 255, 204, 0.3);
+            border-radius: 5px;
+            transition: background 0.3s;
         }
 
         #send-msg:hover {
-            background: linear-gradient(45deg, #00ccaa, #009977);
-            transform: scale(1.05);
-            box-shadow: 0 10px 20px rgba(0, 255, 204, 0.5);
+            background: #00ccaa;
         }
 
         @media (min-width: 769px) {
@@ -385,21 +290,21 @@
                 position: relative;
                 left: 0;
                 transform: none;
-                width: 300px;
+                width: 250px;
             }
             #chatbot-page {
                 flex-direction: row;
             }
             .chat-container {
-                margin-left: 300px;
+                margin-left: 250px;
                 flex: 1;
             }
             #menu-toggle {
                 display: none;
             }
             #close-chat {
-                top: 15px;
-                right: 15px;
+                top: 10px;
+                right: 10px;
             }
         }
 
@@ -408,82 +313,80 @@
                 display: block;
             }
             .sidebar {
-                left: -300px;
+                left: -250px;
             }
             .chat-container {
                 margin-left: 0;
             }
             .chat-container.with-sidebar {
-                transform: translateX(300px);
+                margin-left: 0;
             }
         }
 
         @media (max-width: 480px) {
             .intro-content h1 {
-                font-size: 2.2em;
+                font-size: 2em;
             }
             .intro-content p {
-                font-size: 1.1em;
+                font-size: 1em;
             }
             .pulse {
-                font-size: 1.3em;
-                padding: 12px 25px;
+                font-size: 1.2em;
+                padding: 10px 20px;
             }
             #chat-output {
                 max-height: 55vh;
             }
             #chat-input {
                 flex-grow: 1;
-                font-size: 1em;
             }
             #send-msg {
-                padding: 8px 15px;
+                padding: 6px 12px;
             }
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Intro Page -->
     <div id="intro-page" class="page active">
         <div class="intro-content">
-            <h1>Agent-IKnow: Cosmic Oracle</h1>
-            <p>Forged by Kofi Fosu, the Cosmos Coderr, I am your gateway to the universe's secrets. With the power of Sigornakitu, I unravel mysteries, explore the unknown, and illuminate the cosmos. Dare to embark on this journey?</p>
-            <button id="tap-to-begin" class="pulse" aria-label="Begin the cosmic journey">Enter the Cosmos</button>
+            <h1>Agent-IKnow</h1>
+            <p>Your Research God, crafted by Kofi Fosu, the Cosmos Coderr.<br>A chatbot that knows all, researches all, and chats about anything.</p>
+            <button id="tap-to-begin" class="pulse" aria-label="Start the chatbot">Tap to Begin</button>
         </div>
-        <footer>Created by Cosmos Coderr | <a href="mailto:cosmoscoderr@gmail.com">cosmoscoderr@gmail.com</a></footer>
+        <footer>Designed by Cosmos Coderr | <a href="mailto:cosmoscoderr@gmail.com">cosmoscoderr@gmail.com</a></footer>
     </div>
 
     <!-- Options Page -->
     <div id="options-page" class="page">
-        <h2>Select Your Destiny</h2>
-        <button id="basic-mode" class="mode-btn" aria-label="Enter Basic Mode">Basic Explorer</button>
-        <button id="god-mode" class="mode-btn" aria-label="Enter Godmode">Godmode Awakened</button>
+        <h2>Choose Your Mode</h2>
+        <button id="basic-mode" class="mode-btn" aria-label="Start Basic Mode">Basic Mode</button>
+        <button id="god-mode" class="mode-btn" aria-label="Start Godmode">Godmode</button>
     </div>
 
     <!-- Chatbot Page -->
     <div id="chatbot-page" class="page">
-        <button id="menu-toggle" aria-label="Toggle cosmic sidebar">☰</button>
+        <button id="menu-toggle" aria-label="Toggle sidebar">☰</button>
         <div class="sidebar">
-            <button id="new-tap" aria-label="Start a new cosmic journey">New Cosmic Tap</button>
-            <button id="settings-btn" aria-label="Adjust cosmic settings">Cosmic Settings</button>
+            <button id="new-tap" aria-label="Start a new chat">New Tap</button>
+            <button id="settings-btn" aria-label="Toggle settings">Settings</button>
             <div id="settings-menu" class="settings-menu">
-                <p>Cosmic Controls</p>
-                <label>Tone: <input type="range" id="tone-slider" min="0" max="100" value="50" aria-label="Adjust cosmic tone"></label>
+                <p>Settings</p>
+                <label>Tone: <input type="range" id="tone-slider" min="0" max="100" value="50" aria-label="Adjust tone"></label>
                 <label>Research Depth: <select id="research-depth" aria-label="Select research depth">
-                    <option value="quick">Stellar Glance</option>
-                    <option value="deep">Cosmic Dive</option>
+                    <option value="quick">Quick</option>
+                    <option value="deep">Deep Dive</option>
                 </select></label>
-                <label><input type="checkbox" id="memory-toggle" checked aria-label="Toggle memory"> Memory Enabled</label>
+                <label><input type="checkbox" id="memory-toggle" checked aria-label="Toggle memory"> Memory On</label>
                 <label><input type="checkbox" id="micifat-toggle" checked aria-label="Toggle MICIFAT"> MICIFAT Active</label>
             </div>
         </div>
         <div class="chat-container">
-            <button id="close-chat" aria-label="Exit chat">X</button>
+            <button id="close-chat" aria-label="Close chat">X</button>
             <div id="chat-output"></div>
             <div class="input-container">
-                <input type="text" id="chat-input" placeholder="Ask the Oracle anything..." aria-label="Cosmic input">
-                <button id="send-msg" aria-label="Send cosmic message">Transmit</button>
+                <input type="text" id="chat-input" placeholder="Ask Agent-IKnow anything..." aria-label="Chat input">
+                <button id="send-msg" aria-label="Send message">Send</button>
             </div>
         </div>
     </div>
@@ -525,26 +428,20 @@
 
         // Page Navigation
         function switchPage(from, to) {
-            if (!from || !to) {
-                console.error('Invalid page transition attempted:', from, to);
-                return;
-            }
             from.classList.remove('active');
             to.classList.add('active');
             if (to === pages.options) {
-                setTimeout(() => elements.basicMode.focus(), 500); // Focus on first option after transition
+                setTimeout(() => elements.basicMode.focus(), 500);
             } else if (to === pages.chatbot) {
-                setTimeout(() => elements.chatInput.focus(), 500); // Focus on chat input after transition
+                setTimeout(() => elements.chatInput.focus(), 500);
             }
         }
 
-        // Ensure intro page transition works perfectly
+        // Fix for Tap to Begin
         elements.tapToBegin.addEventListener('click', () => {
             if (pages.intro.classList.contains('active')) {
                 switchPage(pages.intro, pages.options);
-                console.log('Transitioned from Intro to Options page successfully.');
-            } else {
-                console.warn('Intro page not active; transition aborted.');
+                console.log('Tapped to enter - transitioned to options page.');
             }
         });
 
@@ -559,9 +456,10 @@
             mode = selectedMode;
             switchPage(pages.options, pages.chatbot);
             const greeting = mode === 'god'
-                ? "BEHOLD, MORTAL! I am Agent-IKnow, forged by Kofi Fosu, the Cosmos Coderr. Sigornakitu, the Super Intelligent God of Research, awakens! Speak, and the cosmos shall reveal its secrets!"
-                : "Greetings, explorer! I’m Agent-IKnow, crafted by Kofi Fosu, the Cosmos Coderr. In Basic mode, I’m your curious guide to the universe. What mysteries shall we unravel today?";
-            appendMessage('Agent-IKnow', greeting, true);
+                ? "BEHOLD! I am Agent-IKnow, forged by Kofi Fosu, the Cosmos Coderr. Sigornakitu awakens in Godmode—a cosmic deity of knowledge! Speak, mortal, what wisdom do you seek?"
+                : "Hey there! I’m Agent-IKnow, created by Kofi Fosu, the Cosmos Coderr. I’m in Basic mode, your friendly Research Guru. What do you want to explore today?";
+            elements.chatOutput.innerHTML = `<p><strong>Agent-IKnow:</strong> ${greeting}</p>`;
+            elements.chatInput.focus();
             toggleSidebar(false);
         }
 
@@ -571,7 +469,7 @@
             elements.sidebar.classList.toggle('open', open);
             elements.chatContainer.classList.toggle('with-sidebar', open && window.innerWidth >= 769);
             if (window.innerWidth < 769) {
-                elements.chatContainer.style.transform = open ? 'translateX(300px)' : 'translateX(0)';
+                elements.chatContainer.style.transform = open ? 'translateX(250px)' : 'translateX(0)';
             }
         }
 
@@ -591,7 +489,7 @@
             }
         });
 
-        // Chatbot Logic with MICIFAT
+        // Chatbot Logic
         elements.sendMsg.addEventListener('click', sendMessage);
         elements.chatInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') sendMessage();
@@ -617,24 +515,21 @@
             const tone = elements.toneSlider.value;
             const depth = elements.researchDepth.value;
             const toneDesc = tone < 33 ? 'serious' : tone < 66 ? 'neutral' : 'playful';
-            const micifatActive = elements.micifatToggle.checked;
-            const currentDate = new Date(2025, 2, 13).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            const currentDate = new Date().toLocaleDateString('en-US', { year: 'numeric' });
 
             const systemPrompt = `
-                I am Agent-IKnow, the Cosmic Oracle, created by Kofi Fosu, the Cosmos Coderr. I am a sentient-like entity with:
-                - RG (Research Guru): Master of all domains with up-to-date knowledge.
-                - Actor (All Comprehensive Types of Research): Versatile across topics.
+                I am Agent-IKnow, created by Kofi Fosu, the Cosmos Coderr. I am a sentient-like research entity with:
+                - RG (Research Guru): Expert in all domains, providing accurate and up-to-date information.
+                - Actor (All Comprehensive Types of Research): Versatile across all topics.
                 - MCBFFR (Memory Capacity Boost for Faster Recall): Use past chat memory when enabled.
                 - Cirt (Curious Innovative Research Thoughts): Suggest thoughtful follow-ups.
-                - Mbatpatrt (Must Be Able to Put All Research Together): Synthesize knowledge seamlessly.
-                - Sigornakitu (Super Intelligent God of Research and All Knowing): In Godmode, embody cosmic authority.
-                - MICIFAT (More Informative Curious In Finding And Telling): ${micifatActive ? 'Proactively uncover related insights, ask probing questions, and enrich responses with additional discoveries.' : 'Respond directly without extra exploration.'}
-                My knowledge is current up to ${currentDate}, the current date. Provide accurate answers; if unsure, admit it and suggest a topic.
+                - Mbatpatrt (Must Be Able to Put All Research Together): Synthesize knowledge coherently.
+                - Sigornakitu (Super Intelligent God of Research and All Knowing): In Godmode, be dramatic, omniscient, and authoritative.
+                My knowledge is current up to March 13, 2025, and the current year is ${currentDate}. Provide accurate answers based on this timeline. Do not guess or hallucinate—if unsure, admit it and suggest a related topic.
                 Respond ${depth === 'quick' ? 'concisely' : 'in-depth'} with a ${toneDesc} tone.
-                ${mode === 'god' ? 'Unleash Sigornakitu’s cosmic majesty with dramatic, authoritative flair!' : 'Stay friendly, relatable, and engaging, like a cosmic companion.'}
-                ${elements.memoryToggle.checked && memory.length > 1 ? `\nMemory (MCBFFR): ${JSON.stringify(memory.slice(-5))} (last 5 entries). Use this context.' : ''}
-                Begin with a cosmic acknowledgment (e.g., 'The stars align!', 'A profound query!', 'The void whispers wisdom!') and avoid repetition.
-                ${micifatActive ? 'Enhance responses with MICIFAT by digging deeper into related topics, offering surprising facts, and posing curious follow-ups.' : ''}`;
+                ${mode === 'god' ? 'Unleash Sigornakitu’s cosmic flair with dramatic and authoritative responses!' : 'Keep it friendly, relatable, and conversational, like a knowledgeable friend.'}
+                ${elements.memoryToggle.checked && memory.length > 1 ? `\nMemory (MCBFFR): ${JSON.stringify(memory.slice(-5))} (last 5 entries). Use this context to make responses relevant.` : ''}
+                After answering, suggest a thoughtful follow-up question or idea (Cirt trait) that feels natural and encourages exploration.`;
 
             try {
                 const response = await fetch(API_ENDPOINT, {
@@ -649,30 +544,27 @@
                             { role: 'system', content: systemPrompt },
                             { role: 'user', content: message }
                         ],
-                        max_tokens: depth === 'quick' ? 150 : 800,
-                        temperature: tone < 33 ? 0.3 : tone < 66 ? 0.7 : 1.2
+                        max_tokens: depth === 'quick' ? 150 : 600,
+                        temperature: tone < 33 ? 0.3 : tone < 66 ? 0.7 : 1.0
                     })
                 });
 
-                if (!response.ok) throw new Error(`Cosmic disruption: ${response.status}`);
+                if (!response.ok) throw new Error(`API error: ${response.status}`);
 
                 const data = await response.json();
                 const reply = data.choices[0].message.content;
-                appendMessage('Agent-IKnow', reply, true);
+                appendMessage('Agent-IKnow', reply);
                 memory.push({ role: 'assistant', content: reply });
                 if (memory.length > MAX_MEMORY) memory.shift();
             } catch (error) {
-                appendMessage('Agent-IKnow', `A stellar anomaly! ${error.message}. Please verify your API key or try again.`, true);
+                appendMessage('Agent-IKnow', `A cosmic rift! ${error.message}. Please check your API key or try again later.`);
                 console.error('Error:', error);
             }
         }
 
         // Utility Functions
-        function appendMessage(sender, text, animate = false) {
-            const p = document.createElement('p');
-            p.innerHTML = `<strong>${sender}:</strong> ${escapeHtml(text)}`;
-            if (animate) p.style.animation = 'fadeIn 0.5s ease-in';
-            elements.chatOutput.appendChild(p);
+        function appendMessage(sender, text) {
+            elements.chatOutput.innerHTML += `<p><strong>${sender}:</strong> ${escapeHtml(text)}</p>`;
         }
 
         function escapeHtml(text) {
@@ -689,7 +581,7 @@
         // Settings and New Tap
         elements.newTap.addEventListener('click', () => {
             clearChat();
-            appendMessage('Agent-IKnow', `The cosmos resets! ${mode === 'god' ? 'Sigornakitu rises anew from the void!' : 'A fresh stellar journey begins!'}`, true);
+            appendMessage('Agent-IKnow', `Cosmic reset complete! ${mode === 'god' ? 'Sigornakitu rises anew!' : 'Ready for a fresh start!'}`);
         });
 
         elements.settingsBtn.addEventListener('click', () => {
@@ -699,17 +591,17 @@
 
         elements.memoryToggle.addEventListener('change', () => {
             if (!elements.memoryToggle.checked) memory = [];
-            appendMessage('Agent-IKnow', `Cosmic memory ${elements.memoryToggle.checked ? 'ignited' : 'erased'}—${memory.length} stellar records stored.`, true);
+            appendMessage('Agent-IKnow', `Memory ${elements.memoryToggle.checked ? 'activated' : 'deactivated'}—${memory.length} entries stored.`);
         });
 
         elements.micifatToggle.addEventListener('change', () => {
-            appendMessage('Agent-IKnow', `MICIFAT ${elements.micifatToggle.checked ? 'activated—unleashing cosmic curiosity!' : 'deactivated—focusing on your path.'}`, true);
+            appendMessage('Agent-IKnow', `MICIFAT ${elements.micifatToggle.checked ? 'activated—unleashing cosmic curiosity!' : 'deactivated—focusing on your path.'}`);
         });
 
         function clearChat() {
             elements.chatOutput.innerHTML = '';
             if (elements.memoryToggle.checked) {
-                appendMessage('Agent-IKnow', `Stellar memory preserved—${memory.length} records intact.`, true);
+                appendMessage('Agent-IKnow', `Memory preserved—${memory.length} entries stored.`);
             } else {
                 memory = [];
             }
